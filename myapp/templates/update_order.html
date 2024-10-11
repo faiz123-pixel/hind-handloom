@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myapp/css/cart.css' %}">
+<style>
+    *{
+        text-align: center;
+    }
+    .content > h2{
+        margin: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Update Order</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Status:</label>
+    <select name="status">
+        <option value="Pending" {% if order.status == "Pending" %}selected{% endif %}>Pending</option>
+        <option value="Shipped" {% if order.status == "Shipped" %}selected{% endif %}>Shipped</option>
+        <option value="Delivered" {% if order.status == "Delivered" %}selected{% endif %}>Delivered</option>
+    </select>
+    <button type="submit">Update Order</button>
+</form>
+{% endblock %}

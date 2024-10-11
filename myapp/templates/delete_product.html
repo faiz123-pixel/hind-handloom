@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<style>
+    *{
+        text-align: center;
+    }
+    .content > h2{
+        margin-top: 20px;
+    }
+    button{
+        margin: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Are you sure you want to delete the product "{{ product.name }}"?</h2>
+    
+    <p>Price: ${{ product.price }}</p>
+    <p>Stock: {{ product.stock }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, delete this product</button>
+    </form>
+
+    <a href="{% url 'hidden_page' %}">Cancel</a>
+{% endblock %}

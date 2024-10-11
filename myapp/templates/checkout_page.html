@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myapp/css/checkout_page.css' %}">
+{% endblock %}
+
+{% block content %}
+ <div class="main">
+<h2>Checkout</h2>
+
+<h3>Product Details</h3>
+<p>Product: {{ product.name }}</p>
+<p>Price: &#8377;{{ product.price }}</p>
+
+<h3>Enter Your Details</h3>
+
+<form method="post" class="form_class">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button">Place Order</button>
+</form>
+</div>
+{% endblock %}

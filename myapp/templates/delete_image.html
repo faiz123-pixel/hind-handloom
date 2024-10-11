@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<style>
+    *{
+        text-align: center;
+    }
+    .content > h2{
+        margin-top: 20px;
+    }
+    button{
+        margin:10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Are you sure you want to delete the image "{{ image.title }}"?</h2>
+    
+    <p><img src="{{ image.image.url }}" alt="{{ image.title }}" width="200"></p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, delete this image</button>
+    </form>
+
+    <a href="{% url 'hidden_page' %}">Cancel</a>
+{% endblock %}

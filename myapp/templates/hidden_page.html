@@ -1,0 +1,199 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myapp/css/hidden_page.css' %}" />
+{% endblock %} {% block content %}
+{% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li style="color: green; text-align:center" id="message">{{ message }}</li>
+            {% endfor %}
+        </ul>
+{% endif %}
+<h2>Admin Panel</h2>
+
+<!-- Tab Buttons for Orders, Products, Images -->
+<div class="tab-container">
+  <button class="tab-btn active" data-target="orders-section">Orders</button>
+  <button class="tab-btn" data-target="products-section">Products</button>
+  <button class="tab-btn" data-target="images-section">Images</button>
+</div>
+
+<!-- Orders Section -->
+<div id="orders-section" class="content-section active">
+  <h2>Orders</h2>
+  <table border="1" class="table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Product Image</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Customer Name</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Pincode</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>
+          {% if order.product.image %}
+          <img
+            src="{{ order.product.image.url }}"
+            alt="{{ order.product.name }}"
+            width="100"
+          />
+          {% else %}
+          <span>No Image</span>
+          {% endif %}
+        </td>
+        <td>{{ order.product.name }}</td>
+        <td>&#8377;{{ order.product.price }}</td>
+        <td>{{ order.name }}</td>
+        <td>{{ order.mobile_number }}</td>
+        <td>{{ order.email }}</td>
+        <td>{{ order.address }}</td>
+        <td>{{ order.pincode }}</td>
+        <td>{{ order.status }}</td>
+        <td>
+          <a href="{% url 'update_order' order.id %}">Update</a> |
+          <a href="{% url 'delete_order' order.id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Products Section -->
+<div id="products-section" class="content-section">
+  <h2>Add New Product</h2>
+  <!-- Product Form -->
+  <div class="add-product">
+    <form method="POST" enctype="multipart/form-data" class="form_class">
+      {% csrf_token %} {{ product_form.as_p }}
+      <button type="submit" class="button">Add Product</button>
+    </form>
+  </div>
+  <!-- Product List -->
+  <h3 style="text-align: center;
+    margin: 10px;">Manage Products</h3>
+  <table border="1" class="table">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Image</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Color</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.id }}</td>
+        <td>
+          {% if product.image %}
+          <img
+            src="{{ product.image.url }}"
+            alt="{{ product.name }}"
+            width="100"
+          />
+          {% else %}
+          <span>No Image</span>
+          {% endif %}
+        </td>
+        <td>{{ product.name }}</td>
+        <td>&#8377;{{ product.price }}</td>
+        <td>{{ product.color }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <a href="{% url 'update_product' product.id %}">Update</a> |
+          <a href="{% url 'delete_product' product.id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Images Section -->
+<div id="images-section" class="content-section">
+  <h2>Add New Image</h2>
+  <div class="add-img">
+
+  <form method="POST" enctype="multipart/form-data" class="form_class">
+    {% csrf_token %} {{ image_form.as_p }}
+    <button type="submit" class="button">Upload Image</button>
+  </form>
+  </div>
+  <h3 style="text-align: center;
+    margin: 10px;">Manage Images</h3>
+  <table border="1" class="table">
+    <thead>
+      <tr>
+        <th>Image ID</th>
+        <th>Image Title</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for image in images %}
+      <tr>
+        <td>{{ image.id }}</td>
+        <td>{{ image.title }}</td>
+        <td>
+          {% if image.image %}
+          <img
+            src="{{ image.image.url }}"
+            alt="{{ image.title }}"
+            width="100"
+          />
+          {% else %}
+          <span>No Image</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'delete_image' image.id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  setTimeout(function() {
+    document.getElementById("message").style.display = "none";
+  }, 3000);
+  // JavaScript for tab switching
+  const tabs = document.querySelectorAll(".tab-btn");
+  const sections = document.querySelectorAll(".content-section");
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", function () {
+      // Remove active class from all buttons
+      tabs.forEach((btn) => btn.classList.remove("active"));
+
+      // Hide all sections
+      sections.forEach((section) => section.classList.remove("active"));
+
+      // Add active class to the clicked button
+      this.classList.add("active");
+
+      // Show the corresponding section
+      const target = document.getElementById(this.getAttribute("data-target"));
+      target.classList.add("active");
+    });
+  });
+</script>
+{% endblock %}

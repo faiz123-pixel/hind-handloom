@@ -1,0 +1,38 @@
+.main{
+    gap: 5px;
+    text-align: center;
+    display: grid;
+    justify-content: center;
+    border: 2px solid;
+    border-radius: 20px;
+    width: max-content;
+    height: auto;
+    margin: auto;
+    margin-top: 10vh;
+    padding: 20px;
+}
+.form_class{
+    display: grid;
+    row-gap: 6px;
+}
+.form_class ul{
+    display: none;
+}
+.form_class p{
+    display: flex;
+    justify-content: space-between;
+}
+.form_class p input{
+    height: 30px;
+    border-radius: 5px;
+}
+.button{
+    height: 30px;
+    align-items: center;
+    display: grid;
+    border-radius: 5px;
+    background-color: white;
+}
+.button:hover{
+    background-color: rgb(214, 214, 235);
+}

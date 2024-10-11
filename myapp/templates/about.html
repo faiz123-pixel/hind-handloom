@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myapp/css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions, feel free to reach out to us at <br>{% for contacts in contact %}{{contacts.email}}<br>{% endfor %}</p>
+        <p>{% for contacts in contact %}{{contacts.phone_number}}<br>{% endfor %}</p>
+        <p>Address: {% for contacts in contact %}{{contacts.address}}<br>{% endfor %}</p>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 Our Company. All rights reserved.</p>
+</footer>
+{% endblock %}

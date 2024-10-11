@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .main{
+        display: grid;
+        justify-content: center;
+        gap: 10px;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .main li{
+        font-size: 25px;
+        margin: 30px;
+        list-style-type: none;
+    }
+    .main li a{
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+ <div class="main">
+<h2>Order Confirmation</h2>
+
+<p>Thank you for your order!</p>
+<p>Order ID: {{ order.id }}</p>
+<p>Product: {{ order.product.name }}</p>
+<p>Price: ${{ order.product.price }}</p>
+
+<h3>Shipping Details:</h3>
+<p>Name: {{ order.name }}</p>
+<p>Mobile: {{ order.mobile_number }}</p>
+<p>Mobile: {{ order.email }}</p>
+<p>Pincode: {{ order.pincode }}</p>
+<p>Home District: {{ order.home_district }}</p>
+<p>Address: {{ order.address }}</p>
+<p>Status: {{ order.status }}</p>
+<li><a href="{% url 'home' %}">🏠 Home</a></li>
+</div>
+{% endblock %}

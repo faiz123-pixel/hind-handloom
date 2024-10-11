@@ -1,0 +1,144 @@
+*{
+    box-sizing: border-box;
+     margin: 0;
+     padding: 0;
+}
+:root{
+    --main-bg-color: #010151;
+}
+body{
+    font-family: Arial, sans-serif;
+    background-color: #dadae9;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    padding: 0px 10px;
+    background-color: var(--main-bg-color);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+.d-sidebar-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.d-search-form{
+    width: 70vw;
+}
+.open-btn{
+    margin-right: 20px;
+    cursor: pointer;
+    background: none;
+    color: white;
+
+}
+.logo{
+    height: 40px;
+    margin-right: 50px;
+}
+
+.search-form{
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+.search-form input{
+    padding: 5px;
+    border-radius: 15px;
+    border: none;
+    flex: 1;
+    margin-right: 5px;
+}
+.search-form button{
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid darkslateblue;
+    color: white;
+    cursor: pointer;
+    background-color: var(--main-bg-color);
+}
+.sidebar{
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    background-color: var(--main-bg-color);
+    transition: 0.3s;
+    color: white;
+    overflow-x: hidden;
+    padding-top: 42px;
+    left: -250px;
+    z-index: 1000;
+}
+.close-btn{
+    color: white;
+    cursor: pointer;
+    font-size: 36px;
+    position: absolute;
+    border: none;
+    background: none;
+    top: 6px;
+    left: 15px;
+}
+.sidebar ul{
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar ul li{
+    border-bottom: 1px solid darkblue;
+    padding: 15px;
+}
+.sidebar ul li a{
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+.sidebar ul li a:hover{
+    background-color: #575757;
+}
+.sidebar-open {
+    left: 0; 
+}
+.content{
+    padding-top: 40px;
+}
+
+
+
+/* responsive */
+@media (max-width: 768px){
+    body{
+        font-size: 14px;
+    }
+    header{
+        display: grid;
+        padding-bottom: 5px;
+    }
+    .sidebar{
+        width: 200px;
+    }
+    .d-sidebar-btn{
+        justify-content: flex-start;
+    }
+    .d-search-form{
+        width: 90vw;
+    }
+    .search-form input {
+        padding: 8px; /* Increase padding on smaller screens */
+        font-size: 14px; /* Adjust font size */
+    }
+    /* .search-form{
+        width: 90vw;
+    } */
+
+    .search-form button {
+        padding: 5px; /* Adjust button padding */
+        font-size: 14px; /* Adjust button font size */
+    }
+    .content{
+        padding-top: 80px;
+    }
+}

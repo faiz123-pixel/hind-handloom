@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myapp/css/product_details_styles.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="product_img">
+            <img src="{{ product.image.url}}" alt="{{ product.name }}">
+        </div>
+        <div class="product_info">
+            <div class="product_title product_info_style">{{ product.name }}</div>
+            <div class="product_description product_info_style" style="font-size: 12px;">{{ product.description }}</div>
+            <div class="product_price product_info_style">&#8377;{{ product.price }}</div>
+            <div class="product_color product_info_style">{{ product.color }}</div>
+            <div class="product_stock product_info_style">
+                {% if product.is_in_stock %}
+                    <form method="post" action="{% url 'checkout_page' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="product_button">Buy Now</button>
+                    </form>
+                {% else %}
+                    <p style="color: red;">Out of stock</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="main_container1">
+        {% for productss in productss %}
+        <div class="product1" onclick="gotoproductdetail({{ productss.id }})">
+            <div class="product_img1">
+            <img src="{{ productss.image.url }}" alt="{{ productss.name }}">
+            </div>
+            <div class="product_info1">
+                <p>{{ productss.name }}</p>
+                <h3>&#8377;{{ productss.price }}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    <div>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'myapp/js/scripts.js' %}"></script>
+{% endblock %}

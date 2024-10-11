@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .main{
+        gap: 5px;
+        text-align: center;
+        display: grid;
+        justify-content: center;
+        border: 2px solid;
+        border-radius: 20px;
+        width: max-content;
+        height: auto;
+        margin: 20px auto 0;
+        padding: 20px;
+    }
+    .form_class{
+        display: grid;
+        row-gap: 6px;
+    }
+    /* .form_class ul{
+        display: none;
+    } */
+    .form_class p{
+        display: flex;
+        justify-content: space-between;
+    }
+    .form_class p input{
+        height: 30px;
+        border-radius: 5px;
+    }
+    .button{
+        height: 30px;
+        align-items: center;
+        display: grid;
+        border-radius: 5px;
+        background-color: white;
+    }
+    .button:hover{
+        background-color: rgb(214, 214, 235);
+        /* color: aliceblue; */
+    }
+    a{
+        text-decoration: none;
+    }
+    @media (max-width: 768px){
+        .form_class p a{
+            margin-right: -290px;
+        }
+        .form_class p input{
+            margin-top: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="main">
+<h2>Update Product</h2>
+<form method="POST" enctype="multipart/form-data" class="form_class">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button">Update Product</button>
+</form>
+<a href="{% url 'hidden_page' %}">Back to Admin Page</a>
+</div>
+{% endblock %}

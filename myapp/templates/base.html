@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static%}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop high-quality, handmade curtains at Hind Handloom. Explore a wide range of designer, 
+    custom, and luxury curtains made from premium fabrics like cotton, silk, and linen. Perfect for every room, 
+    our affordable curtains blend traditional craftsmanship with modern designs. Free shipping across India!">
+    <meta name="keywords" content="buy curtains online,hindhandloom789, Hind Handloom curtains, designer curtains, 
+    custom curtains, luxury curtains, window curtains, door curtains, cotton curtains, silk curtains, 
+    linen curtains, blackout curtains, curtain store India, affordable curtains, living room curtains, 
+    bedroom curtains, handmade curtains, ethnic curtains, printed curtains, curtain accessories, 
+    home decor curtains, curtain designs, online curtain shop">
+    <meta name="author" content="Mohd Faiz">
+    <title>Hind Handloom</title>
+    <link rel="icon" href="{% static 'myapp/images/favicon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'myapp/css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <header>
+        <div class="d-sidebar-btn">
+        <button id="open-sidebar-btn" class="open-btn">☰</button>
+        <img src="{% static 'myapp/images/logo.png' %}" alt="logo" class="logo" id="logo">
+        </div>
+        <div class="d-search-form">
+        {% comment %} <form id="search-form" class="search-form" method="get"> {% endcomment %}
+        <form id="search-form" class="search-form" action="{% url 'search' %}" method="get">
+            <input type="text" name="search-item" placeholder="Search..." required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <button id="close-sidebar-btn" class="close-btn">&times;</button>
+        <ul>
+        <li><a href="{% url 'home' %}">🏠 Home</a></li>
+        <li><a href="{% url 'about' %}"> ℹ️  about</a></li>
+        </ul>
+    </div>
+    <div class="content">
+    {% block content %}
+        <!-- Page specific content will be injected here -->
+    {% endblock %}
+    </div>
+    
+    <script src="{% static 'myapp/js/base.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+    <script>
+        let clickCount = 0;
+        const maxClicks = 5;
+        const logo = document.getElementById('logo');
+    
+        logo.addEventListener('click', function() {
+            clickCount += 1;
+    
+            if (clickCount === maxClicks) {
+                window.location.href = "{% url 'password_prompt' %}";  // Redirect to hidden order page
+            }
+    
+            // Reset counter after 3 seconds
+            setTimeout(() => {
+                clickCount = 0;
+            }, 3000);
+        });
+    </script>
+</body>
+
+</html>

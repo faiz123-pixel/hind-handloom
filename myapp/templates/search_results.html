@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<style>
+    
+.main_container1{
+    margin-top: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: grid;
+    gap: 20px;
+    padding: 28px;
+ }
+.product1{
+    background-color: white;
+    width: 200px;
+    height: 300px;
+    border-radius: 5%;
+    padding: 10px;
+}
+.product_img1{
+    height: 80%;
+}
+.product_img1 img{
+    width: 100%;
+    height: auto;
+}
+
+.product_info1 h3{
+    text-align: center;
+    font-size: 18px;
+    margin: 5px 0;
+}
+.product_info1 p{
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}
+@media (max-width 768px){
+    .main_container1{
+        padding: 15px; /* Reduce padding on smaller screens */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    .product1{
+        width: 160px; /* Smaller product width */
+        height: 250px;
+    }
+    .product_info1 h3,.product_info1 p{
+        font-size: 14px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 style="text-align:center;">Search Results for "{{ query }}"</h1>
+
+<div class="product-list">
+    {% if product %}
+    <div class="main_container1">
+        {% for products in product %}
+        <div class="product1" onclick="gotoproductdetail({{ products.id }})">
+            <div class="product_img1">
+            <img src="{{ products.image.url }}" alt="{{ products.name }}">
+            </div>
+            <div class="product_info1">
+                <p>{{ products.name }}</p>
+                <h3>&#8377;{{ products.price }}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    <div>
+    {% else %}
+        <p>No products found for your search.</p>
+    {% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    function gotoproductdetail(productid) 
+{
+  window.location.href = `/product/${productid}/`;
+}
+
+</script>
+{% endblock %}
+

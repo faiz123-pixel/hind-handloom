@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+{% endblock %}
+{% block content %}
+<main class="main_class">
+    <div class="slider" id="slider">
+        <div class="main_images">
+            {% for image in images %}
+            <div class="slide_image {% if forloop.first %}active{% endif %}">
+              <img src="{{ image.image.url }}" alt="{{ image.title }}">
+            </div>
+            {% endfor %} 
+        </div>
+        <div class="slider_button">
+            <button id="prevbtn" class="slider_btn">&#8592;</button>
+            <button id="nextbtn" class="slider_btn">&#8594;</button>
+        </div>
+    </div>
+    <div class="main_container">
+        {% for products in product %}
+        <div class="product" onclick="gotoproductdetail({{ products.id }})">
+            <div class="product_img">
+            <img src="{{ products.image.url }}" alt="{{ products.name }}">
+            </div>
+            <div class="product_info">
+                <p>{{ products.name }}</p>
+                <h3>&#8377;{{ products.price }}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    <div>
+</main>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'myapp/js/scripts.js' %}"></script>
+{% endblock %}
