@@ -1,40 +1,175 @@
 {% extends 'base.html' %}
-{% load static%}
+{% load static %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+<style>
+    /* Slider Styles */
+    .slider {
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .main_images {
+        display: flex;
+        transition: transform 0.6s ease-in-out;
+    }
+    .slide_image {
+        min-width: 100%;
+        transition: opacity 0.5s;
+    }
+    .slide_image img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    .slider_button {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+    .slider_btn {
+        background: rgba(255, 255, 255, 0.7);
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 50%;
+        transition: background 0.3s;
+    }
+    .slider_btn:hover {
+        background: rgba(255, 255, 255, 1);
+    }
+
+    /* Category Section */
+    .category-section {
+        margin: 40px 0;
+    }
+    .category-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    .product-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .product {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .product_img img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .product_info {
+        padding: 10px;
+        text-align: center;
+    }
+    .product_info p {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 5px 0;
+    }
+    .product_info h3 {
+        font-size: 18px;
+        color: #ff6f61;
+    }
+
+    @media screen and (max-width: 768px) {
+        .slider {
+            height: 250px;
+        }
+        .slide_image img {
+            height: 250px;
+        }
+    }
+</style>
 {% endblock %}
+
 {% block content %}
 <main class="main_class">
+
+    <!-- Slider -->
     <div class="slider" id="slider">
-        <div class="main_images">
+        <div class="main_images" id="sliderTrack">
             {% for image in images %}
-            <div class="slide_image {% if forloop.first %}active{% endif %}">
-              <img src="{{ image.image.url }}" alt="{{ image.title }}">
+            <div class="slide_image">
+                <img src="{{ image.image.url }}" alt="{{ image.title }}">
             </div>
-            {% endfor %} 
+            {% endfor %}
         </div>
         <div class="slider_button">
             <button id="prevbtn" class="slider_btn">&#8592;</button>
             <button id="nextbtn" class="slider_btn">&#8594;</button>
         </div>
     </div>
-    <div class="main_container">
-        {% for products in product %}
-        <div class="product" onclick="gotoproductdetail({{ products.id }})">
-            <div class="product_img">
-            <img src="{{ products.image.url }}" alt="{{ products.name }}">
-            </div>
-            <div class="product_info">
-                <p>{{ products.name }}</p>
-                <h3>&#8377;{{ products.price }}</h3>
-            </div>
-        </div>
-        {% endfor %}
-    <div>
-</main>
 
+    <!-- Category-wise Products -->
+    {% for category, products in categories.items %}
+    <div class="category-section">
+        <h2 class="category-title">{{ category }}</h2>
+        <div class="product-row">
+            {% for product in products %}
+            <div class="product" onclick="gotoproductdetail({{ product.id }})">
+                <div class="product_img">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <div class="product_info">
+                    <p>{{ product.name }}</p>
+                    <h3>&#8377;{{ product.price }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+</main>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'myapp/js/scripts.js' %}"></script>
+<script>
+    const track = document.getElementById('sliderTrack');
+    const slides = document.querySelectorAll('.slide_image');
+    const prevBtn = document.getElementById('prevbtn');
+    const nextBtn = document.getElementById('nextbtn');
+    let index = 0;
+
+    function showSlide(idx) {
+        track.style.transform = `translateX(${-idx * 100}%)`;
+    }
+
+    nextBtn.addEventListener('click', () => {
+        index = (index + 1) % slides.length;
+        showSlide(index);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        index = (index - 1 + slides.length) % slides.length;
+        showSlide(index);
+    });
+
+    setInterval(() => {
+        index = (index + 1) % slides.length;
+        showSlide(index);
+    }, 5000);
+</script>
 {% endblock %}

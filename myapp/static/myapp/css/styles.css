@@ -13,8 +13,10 @@ body{
     background-color: #dadae9;
 }
 .main_images {
-    height: 40vh;
-    display: flex;
+    width: 100%;
+    height: auto;
+    display: block;
+
 
 }
 .main_image_title{
@@ -26,7 +28,7 @@ body{
 .slide_image{
     display: none;
     text-align: center;
-    position: relative;
+    position: absolute;
     width: 100%;
     display: none;
     margin-right: -100%;
@@ -43,11 +45,10 @@ body{
 }
 
 .slider{
-    position: relative;
-    width: 40%;
-    max-width: 100%;
-    margin: auto;
+    width: 100%;
+    max-height: 400px; /* Adjust */
     overflow: hidden;
+    position: relative;
 
 }
 

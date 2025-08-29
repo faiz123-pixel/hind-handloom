@@ -16,8 +16,21 @@ from django.db.models import Q
 def home(request):
     return render(request,'home.html')
 def home(request):
-    images= Image.objects.all()
-    product =products.objects.all()
+    images = Image.objects.all()  # Your slider images model
+    product = products.objects.all()
+
+    # Organize products by category
+    categories = {}
+    for p in product:
+        category_name = p.category  # Assuming Product has a ForeignKey to Category
+        if category_name not in categories:
+            categories[category_name] = []
+        categories[category_name].append(p)
+
+    return render(request, 'home.html', {
+        'images': images,
+        'categories': categories
+    })
     return render(request, 'home.html', {'images': images,'product':product })
 def product_details(request,id):
     product = get_object_or_404(products,id=id)
@@ -28,6 +41,11 @@ def cart(request):
 def about(request):
     contacts= Contact.objects.all()
     return render(request, 'about.html',{'contact':contacts})
+def contact(request):
+    return render(request, 'contact.html')
+def shop(request):
+    products = products.objects.all()  # Fetch all products from the database
+    return render(request, 'shop.html', {'products': products})
 
 def search(request):
     query = request.GET.get('search-item')  # Get the search query from the request

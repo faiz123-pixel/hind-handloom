@@ -16,6 +16,8 @@ class products(models.Model):
     color = models.CharField(max_length=25)
     image = models.ImageField(upload_to='product-img/')
     stock = models.IntegerField(default=0)
+    category = models.CharField(max_length=100)
+
     
     def __str__(self):
         return self.name

@@ -1,72 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static%}
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shop high-quality, handmade curtains at Hind Handloom. Explore a wide range of designer, 
-    custom, and luxury curtains made from premium fabrics like cotton, silk, and linen. Perfect for every room, 
-    our affordable curtains blend traditional craftsmanship with modern designs. Free shipping across India!">
-    <meta name="keywords" content="buy curtains online,hindhandloom789, Hind Handloom curtains, designer curtains, 
-    custom curtains, luxury curtains, window curtains, door curtains, cotton curtains, silk curtains, 
-    linen curtains, blackout  curtains, curtain store India, affordable curtains, living room curtains, 
-    bedroom curtains, handmade curtains, ethnic curtains, printed curtains, curtain accessories, 
-    home decor curtains, curtain designs, online curtain shop">
+    <meta name="description" content="Shop premium handmade curtains at Hind Handloom. Explore designer, luxury, and custom curtains made from top-quality fabrics like cotton, silk, and linen. Free shipping across India!">
+    <meta name="keywords" content="curtains online, Hind Handloom curtains, designer curtains, custom curtains, luxury curtains, window curtains, cotton curtains, silk curtains, linen curtains, blackout curtains, home decor">
     <meta name="author" content="Mohd Faiz">
-    <title>Hind Handloom</title>
+    <title>{% block title %}Hind Handloom - Premium Curtains Online{% endblock %}</title>
+
+    <!-- Favicon -->
     <link rel="icon" href="{% static 'myapp/images/favicon.png' %}" type="image/png">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'myapp/css/base.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-    <header>
-        <div class="d-sidebar-btn">
-        <button id="open-sidebar-btn" class="open-btn">☰</button>
-        <img src="{% static 'myapp/images/logo.png' %}" alt="logo" class="logo" id="logo">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button id="open-sidebar-btn" class="menu-btn" aria-label="Open Menu">☰</button>
+            <a href="{% url 'home' %}" class="logo-link">
+                <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="logo" id="logo">
+            </a>
         </div>
-        <div class="d-search-form">
-        {% comment %} <form id="search-form" class="search-form" method="get"> {% endcomment %}
-        <form id="search-form" class="search-form" action="{% url 'search' %}" method="get">
-            <input type="text" name="search-item" placeholder="Search..." required>
-            <button type="submit">Search</button>
-        </form>
-    </div>
+
+        <div class="header-right">
+            <form id="search-form" class="search-form" action="{% url 'search' %}" method="get" role="search">
+                <input type="text" name="search-item" placeholder="Search curtains..." aria-label="Search" required>
+                <button type="submit" aria-label="Search Button">🔍</button>
+            </form>
+        </div>
     </header>
 
-    <div class="sidebar" id="sidebar">
-        <button id="close-sidebar-btn" class="close-btn">&times;</button>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar" aria-hidden="true">
+        <button id="close-sidebar-btn" class="close-btn" aria-label="Close Menu">&times;</button>
         <ul>
-        <li><a href="{% url 'home' %}">🏠 Home</a></li>
-        <li><a href="{% url 'about' %}"> ℹ️  about</a></li>
+            <li><a href="{% url 'home' %}">🏠 Home</a></li>
+            <li><a href="{% url 'about' %}">ℹ️ About</a></li>
+            <li><a href="{% url 'contact' %}">📞 Contact</a></li>
+            <li><a href="{% url 'shop' %}">🛍 Shop</a></li>
         </ul>
-    </div>
-    <div class="content">
-    {% block content %}
-        <!-- Page specific content will be injected here -->
-    {% endblock %}
-    </div>
-    
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content">
+        {% block content %}
+        <!-- Page specific content goes here -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; {{ current_year|default:"2025" }} Hind Handloom. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
     <script src="{% static 'myapp/js/base.js' %}"></script>
     {% block extra_js %}{% endblock %}
+
+    <!-- Hidden Order Page Easter Egg -->
     <script>
-        let clickCount = 0;
-        const maxClicks = 5;
-        const logo = document.getElementById('logo');
-    
-        logo.addEventListener('click', function() {
-            clickCount += 1;
-    
-            if (clickCount === maxClicks) {
-                window.location.href = "{% url 'password_prompt' %}";  // Redirect to hidden order page
-            }
-    
-            // Reset counter after 3 seconds
-            setTimeout(() => {
-                clickCount = 0;
-            }, 3000);
-        });
+        (function() {
+            let clickCount = 0;
+            const maxClicks = 5;
+            const logo = document.getElementById('logo');
+
+            logo.addEventListener('click', function() {
+                clickCount += 1;
+                if (clickCount === maxClicks) {
+                    window.location.href = "{% url 'password_prompt' %}";
+                }
+                setTimeout(() => { clickCount = 0; }, 3000);
+            });
+        })();
     </script>
 </body>
-
 </html>
