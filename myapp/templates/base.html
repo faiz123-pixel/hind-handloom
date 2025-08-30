@@ -4,79 +4,240 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shop premium handmade curtains at Hind Handloom. Explore designer, luxury, and custom curtains made from top-quality fabrics like cotton, silk, and linen. Free shipping across India!">
-    <meta name="keywords" content="curtains online, Hind Handloom curtains, designer curtains, custom curtains, luxury curtains, window curtains, cotton curtains, silk curtains, linen curtains, blackout curtains, home decor">
-    <meta name="author" content="Mohd Faiz">
-    <title>{% block title %}Hind Handloom - Premium Curtains Online{% endblock %}</title>
+    <title>{% block title %}Hind Handloom{% endblock %}</title>
 
-    <!-- Favicon -->
     <link rel="icon" href="{% static 'myapp/images/favicon.png' %}" type="image/png">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'myapp/css/base.css' %}">
     {% block extra_css %}{% endblock %}
+
+    <style>
+        /* Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* Header */
+        .header {
+            width: 100%;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-left,
+        .header-right {
+            flex-basis: 15%;
+            display: flex;
+            align-items: center;
+        }
+        .header-left {
+            justify-content: flex-start;
+        }
+        .header-center {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .header-right {
+            justify-content: flex-end;
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #444;
+        }
+        .menu-btn:hover {
+            color: #4cafef;
+        }
+        .logo {
+            height: 50px;
+            max-width: 130px;
+        }
+
+        /* Search Bar */
+        .search-form {
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 300px;
+        }
+        .search-form input {
+            border: none;
+            padding: 8px 12px;
+            outline: none;
+            font-size: 16px;
+            flex: 1;
+        }
+        .search-form button {
+            background: #3498db;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        .search-form button:hover {
+            background: #217dbb;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -260px;
+            top: 0;
+            width: 260px;
+            height: 100%;
+            background: #fff;
+            border-right: 1px solid #ddd;
+            transition: left 0.3s ease;
+            padding: 20px;
+            z-index: 2000;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .sidebar .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #444;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .sidebar ul li { margin: 18px 0; }
+        .sidebar ul li a {
+            font-size: 18px;
+            color: #333;
+            display: block;
+            transition: color 0.3s;
+        }
+        .sidebar ul li a:hover { color: #4cafef; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-center {
+                flex-grow: 1;
+                justify-content: center;
+            }
+            .search-btn {
+                background: none;
+                color: #444;
+                font-size: 22px;
+                padding: 8px;
+            }
+            .search-btn:hover {
+                color: #4cafef;
+                background: none;
+            }
+            .header {
+                padding: 8px 15px;
+            }
+            .logo {
+                height: 40px;
+                max-width: 100px;
+            }
+            .menu-btn {
+                font-size: 24px;
+            }
+            .header-center {
+                flex-grow: 1;
+                justify-content: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .header {
+                padding: 6px 10px;
+            }
+            .logo {
+                height: 35px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header class="header">
         <div class="header-left">
             <button id="open-sidebar-btn" class="menu-btn" aria-label="Open Menu">☰</button>
+        </div>
+
+        <div class="header-center">
             <a href="{% url 'home' %}" class="logo-link">
-                <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="logo" id="logo">
+                <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="logo">
             </a>
         </div>
 
         <div class="header-right">
-            <form id="search-form" class="search-form" action="{% url 'search' %}" method="get" role="search">
-                <input type="text" name="search-item" placeholder="Search curtains..." aria-label="Search" required>
-                <button type="submit" aria-label="Search Button">🔍</button>
+            <form class="search-form" action="{% url 'search' %}" method="get" role="search">
+                <input type="text" name="search-item" placeholder="Search..." aria-label="Search" required>
+                <button type="submit" aria-label="Search Button" class="search-btn">
+                    <span class="search-icon">🔍</span>
+                </button>
             </form>
         </div>
     </header>
 
-    <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar" aria-hidden="true">
-        <button id="close-sidebar-btn" class="close-btn" aria-label="Close Menu">&times;</button>
+    <nav class="sidebar" id="sidebar">
+        <button id="close-sidebar-btn" class="close-btn">&times;</button>
         <ul>
-            <li><a href="{% url 'home' %}">🏠 Home</a></li>
-            <li><a href="{% url 'about' %}">ℹ️ About</a></li>
-            <li><a href="{% url 'contact' %}">📞 Contact</a></li>
-            <li><a href="{% url 'shop' %}">🛍 Shop</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Main Content -->
     <main class="content">
-        {% block content %}
-        <!-- Page specific content goes here -->
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <p>&copy; {{ current_year|default:"2025" }} Hind Handloom. All rights reserved.</p>
     </footer>
 
-    <!-- Scripts -->
-    <script src="{% static 'myapp/js/base.js' %}"></script>
-    {% block extra_js %}{% endblock %}
-
-    <!-- Hidden Order Page Easter Egg -->
     <script>
-        (function() {
-            let clickCount = 0;
-            const maxClicks = 5;
-            const logo = document.getElementById('logo');
+        // Sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const openBtn = document.getElementById('open-sidebar-btn');
+        const closeBtn = document.getElementById('close-sidebar-btn');
 
-            logo.addEventListener('click', function() {
-                clickCount += 1;
-                if (clickCount === maxClicks) {
-                    window.location.href = "{% url 'password_prompt' %}";
-                }
-                setTimeout(() => { clickCount = 0; }, 3000);
+        // Check for element existence to prevent errors
+        if (sidebar && openBtn && closeBtn) {
+            // Add click event listeners to the buttons
+            openBtn.addEventListener('click', () => {
+                sidebar.classList.add('active');
             });
-        })();
+
+            closeBtn.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+            });
+
+            // Optional: Close the sidebar if the user clicks outside of it
+            document.addEventListener('click', (event) => {
+                if (!sidebar.contains(event.target) && !openBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
     </script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
