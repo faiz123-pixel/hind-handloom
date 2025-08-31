@@ -15,7 +15,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f9f9f9;
+            background-color: #fff;
             color: #333;
             display: flex;
             flex-direction: column;
@@ -121,21 +121,69 @@
             color: #444;
             cursor: pointer;
             margin-bottom: 20px;
+            left: 30px;
+            top: 10px;
         }
-        .sidebar ul li { margin: 18px 0; }
+        .sidebar ul {
+            margin-top: 25px;
+        }
+        {% comment %} .sidebar ul li { margin: 18px 0; } {% endcomment %}
         .sidebar ul li a {
             font-size: 18px;
             color: #333;
             display: block;
-            transition: color 0.3s;
+            {% comment %} padding: 10px; {% endcomment %}
+            border-radius: 5px;
+            transition: color 0.3s, background 0.3s, font-size 0.3s;
         }
-        .sidebar ul li a:hover { color: #4cafef; }
 
+        .sidebar ul li a:hover {
+            {% comment %} color: #fff; /* text color on hover */ {% endcomment %}
+            color: #3498db; /* background color on hover */
+            background: white;
+            font-size: 20px; /* increase size slightly */
+        }
+        .footer {
+            background: #f4f4f4;
+            padding: 20px 15px;
+            border-top: 1px solid #ddd;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+        
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .footer-left p {
+            font-size: 14px;
+            color: #555;
+        }
+        .content {
+            padding: 0px;
+            margin: 0px;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .header-center {
-                flex-grow: 1;
-                justify-content: center;
+                display: none;
             }
             .search-btn {
                 background: none;
@@ -148,7 +196,8 @@
                 background: none;
             }
             .header {
-                padding: 8px 15px;
+                justify-content: space-between;
+                padding: 8px 12px;
             }
             .logo {
                 height: 40px;
@@ -157,34 +206,43 @@
             .menu-btn {
                 font-size: 24px;
             }
-            .header-center {
-                flex-grow: 1;
-                justify-content: center;
+            .header-right {
+                flex-grow: 1; /* Expand search bar */
+                justify-content: flex-end;
+            }
+            .search-form {
+                max-width: 100%; /* Full width for search bar */
+            }
+            .sidebar {
+                width: 175px;
             }
         }
         @media (max-width: 480px) {
-            .header {
-                padding: 6px 10px;
+            .menu-btn {
+                font-size: 24px;
             }
-            .logo {
-                height: 35px;
+            .search-form input {
+                font-size: 14px;
+                padding: 6px 8px;
             }
         }
     </style>
 </head>
 <body>
-
     <header class="header">
+        <!-- Left Section -->
         <div class="header-left">
             <button id="open-sidebar-btn" class="menu-btn" aria-label="Open Menu">☰</button>
         </div>
-
+    
+        <!-- Center Logo -->
         <div class="header-center">
             <a href="{% url 'home' %}" class="logo-link">
                 <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="logo">
             </a>
         </div>
-
+    
+        <!-- Right Section (Search Bar) -->
         <div class="header-right">
             <form class="search-form" action="{% url 'search' %}" method="get" role="search">
                 <input type="text" name="search-item" placeholder="Search..." aria-label="Search" required>
@@ -194,6 +252,7 @@
             </form>
         </div>
     </header>
+    
 
     <nav class="sidebar" id="sidebar">
         <button id="close-sidebar-btn" class="close-btn">&times;</button>
@@ -210,8 +269,14 @@
     </main>
 
     <footer class="footer">
-        <p>&copy; {{ current_year|default:"2025" }} Hind Handloom. All rights reserved.</p>
+        <div class="footer-container">
+            <div class="footer-left">
+                <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="footer-logo">
+                <p>&copy; {{ current_year|default:"2025" }} Hind Handloom. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+    
 
     <script>
         // Sidebar toggle

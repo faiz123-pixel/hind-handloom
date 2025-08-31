@@ -1,146 +1,260 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
 <style>
-    /* Slider Styles */
+body{
+    background: #fff;
+}
+.main_class{
+    background: #fff;
+}
+    /* ===== SLIDER STYLES ===== */
+    /* Slider Container */
+.slider {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 300px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #f4f4f4;
+}
+
+/* Track */
+.slider-track {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+}
+
+/* Slide */
+.slide {
+    min-width: 100%;
+}
+.slide img {
+    width: auto;
+    height: 300px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Navigation Buttons */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    padding: 12px 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s;
+    z-index: 2;
+}
+.slider-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+#prevBtn {
+    left: 15px;
+}
+#nextBtn {
+    right: 15px;
+}
+
+/* Indicators */
+.slider-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+.indicator {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.indicator.active {
+    background: #ff6f61;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
     .slider {
-        width: 100%;
-        height: 400px;
-        overflow: hidden;
-        position: relative;
-        border-radius: 10px;
-        margin-bottom: 30px;
+        height: 200px;
     }
-    .main_images {
-        display: flex;
-        transition: transform 0.6s ease-in-out;
+    .slide img {
+        height: 200px;
     }
-    .slide_image {
-        min-width: 100%;
-        transition: opacity 0.5s;
-    }
-    .slide_image img {
-        width: 100%;
-        height: 400px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-    .slider_button {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        transform: translateY(-50%);
-    }
-    .slider_btn {
-        background: rgba(255, 255, 255, 0.7);
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 50%;
-        transition: background 0.3s;
-    }
-    .slider_btn:hover {
-        background: rgba(255, 255, 255, 1);
-    }
-
-    /* Category Section */
-    .category-section {
-        margin: 40px 0;
-    }
-    .category-title {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        color: #333;
-    }
-    .product-row {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-    }
-    .product {
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .product:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-    .product_img img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-    }
-    .product_info {
-        padding: 10px;
-        text-align: center;
-    }
-    .product_info p {
-        font-size: 16px;
-        font-weight: 500;
-        margin: 5px 0;
-    }
-    .product_info h3 {
+    .slider-btn {
         font-size: 18px;
-        color: #ff6f61;
+        padding: 8px 12px;
     }
+}
 
-    @media screen and (max-width: 768px) {
-        .slider {
-            height: 250px;
-        }
-        .slide_image img {
-            height: 250px;
-        }
-    }
+
+    /* ===== PRODUCT SECTION ===== */
+/* Category Section */
+.category-section {
+    margin: 40px 0;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.category-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+}
+
+.view-all {
+    font-size: 14px;
+    text-decoration: none;
+    color: #ff6f61;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.view-all:hover {
+    color: #d65b50;
+}
+
+/* Horizontal Scroll Row */
+.product-row-scroll {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+    background: #fff;
+}
+
+.product-row-scroll::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}
+
+.product-card {
+    flex: 0 0 auto;
+    width: 200px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scroll-snap-align: start;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f9f9;
+}
+
+.product-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-info {
+    padding: 10px;
+    text-align: center;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ff6f61;
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
 <main class="main_class">
 
-    <!-- Slider -->
+    <!-- ===== Image Slider ===== -->
     <div class="slider" id="slider">
-        <div class="main_images" id="sliderTrack">
+        <div class="slider-track" id="sliderTrack">
             {% for image in images %}
-            <div class="slide_image">
+            <div class="slide">
                 <img src="{{ image.image.url }}" alt="{{ image.title }}">
             </div>
             {% endfor %}
         </div>
-        <div class="slider_button">
-            <button id="prevbtn" class="slider_btn">&#8592;</button>
-            <button id="nextbtn" class="slider_btn">&#8594;</button>
-        </div>
-    </div>
 
-    <!-- Category-wise Products -->
-    {% for category, products in categories.items %}
-    <div class="category-section">
-        <h2 class="category-title">{{ category }}</h2>
-        <div class="product-row">
-            {% for product in products %}
-            <div class="product" onclick="gotoproductdetail({{ product.id }})">
-                <div class="product_img">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                </div>
-                <div class="product_info">
-                    <p>{{ product.name }}</p>
-                    <h3>&#8377;{{ product.price }}</h3>
-                </div>
-            </div>
+        <!-- Navigation Arrows -->
+        <button id="prevBtn" class="slider-btn">&#10094;</button>
+        <button id="nextBtn" class="slider-btn">&#10095;</button>
+
+        <!-- Indicators -->
+        <div class="slider-indicators" id="sliderIndicators">
+            {% for image in images %}
+            <span class="indicator {% if forloop.first %}active{% endif %}"></span>
             {% endfor %}
         </div>
     </div>
-    {% endfor %}
+
+
+    <!-- ===== Category-wise Products ===== -->
+{% for category, products in categories.items %}
+<section class="category-section">
+    <div class="category-header">
+        <h2 class="category-title">{{ category }}</h2>
+        <a href="{% url 'shop' %}?category={{ category }}" class="view-all">View All</a>
+    </div>
+    <div class="product-row-scroll">
+        {% for product in products %}
+        <div class="product-card" onclick="gotoproductdetail({{ product.id }})">
+            <div class="product-img">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            <div class="product-info">
+                <p class="product-name">{{ product.name }}</p>
+                <h3 class="product-price">&#8377;{{ product.price }}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+
+
 
 </main>
 {% endblock %}
@@ -148,28 +262,45 @@
 {% block extra_js %}
 <script>
     const track = document.getElementById('sliderTrack');
-    const slides = document.querySelectorAll('.slide_image');
-    const prevBtn = document.getElementById('prevbtn');
-    const nextBtn = document.getElementById('nextbtn');
-    let index = 0;
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicators = document.querySelectorAll('.indicator');
 
-    function showSlide(idx) {
-        track.style.transform = `translateX(${-idx * 100}%)`;
-    }
+let index = 0;
 
-    nextBtn.addEventListener('click', () => {
-        index = (index + 1) % slides.length;
-        showSlide(index);
+function updateSlider() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    indicators.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
     });
+}
 
-    prevBtn.addEventListener('click', () => {
-        index = (index - 1 + slides.length) % slides.length;
-        showSlide(index);
+// Next Button
+nextBtn.addEventListener('click', () => {
+    index = (index + 1) % slides.length;
+    updateSlider();
+});
+
+// Previous Button
+prevBtn.addEventListener('click', () => {
+    index = (index - 1 + slides.length) % slides.length;
+    updateSlider();
+});
+
+// Indicator Click
+indicators.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+        index = i;
+        updateSlider();
     });
+});
 
-    setInterval(() => {
-        index = (index + 1) % slides.length;
-        showSlide(index);
-    }, 5000);
+// Auto Slide
+setInterval(() => {
+    index = (index + 1) % slides.length;
+    updateSlider();
+}, 3000);
+
 </script>
 {% endblock %}
