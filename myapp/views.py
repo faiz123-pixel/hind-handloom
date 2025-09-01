@@ -44,8 +44,28 @@ def about(request):
 def contact(request):
     return render(request, 'contact.html')
 def shop(request):
-    products = products.objects.all()  # Fetch all products from the database
-    return render(request, 'shop.html', {'products': products})
+    category_filter = request.GET.get('category')
+    
+    if category_filter:
+        product = products.objects.filter(category=category_filter)
+        categories = products.objects.values_list('category',flat=True).distinct()  # For sidebar or filter menu
+    
+        return render(request, 'shop.html', {
+            'products': product,
+            'categories': categories,
+            'selected_category': category_filter
+        })
+    else:
+        categories = products.objects.values_list('category', flat=True).distinct()
+        grouped_products = {}
+        for category in categories:
+            grouped_products[category] = products.objects.filter(category=category)
+
+        return render(request, 'shop.html', {
+            'grouped_products': grouped_products,
+            'categories': categories,
+            'selected_category': None
+        })
 
 def search(request):
     query = request.GET.get('search-item')  # Get the search query from the request

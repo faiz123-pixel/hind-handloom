@@ -153,15 +153,16 @@ body{
 }
 
 .product-card {
-    flex: 0 0 auto;
-    width: 200px;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    scroll-snap-align: start;
+    min-width: 180px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-align: center;
+        background: #fff;
+        transition: box-shadow 0.3s ease;
+        cursor: pointer;
+        scroll-snap-align: start;
 }
 
 .product-card:hover {
