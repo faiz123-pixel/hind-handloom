@@ -1,45 +1,168 @@
 {% extends 'base.html' %}
-
 {% load static %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'myapp/css/product_details_styles.css' %}">
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .product_img img {
+        max-width: 400px;
+        width: 100%;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+
+    .product_info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .product_title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .product_description {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    .product_price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #28a745;
+    }
+
+    .product_color {
+        font-size: 16px;
+        color: #444;
+    }
+
+    .product_button {
+        padding: 12px 20px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .product_button:hover {
+        background: #0056b3;
+    }
+
+    .main_container1 {
+        max-width: 1200px;
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .product1 {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product1:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .product_img1 img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .product_info1 p {
+        font-size: 16px;
+        margin: 8px 0;
+        color: #333;
+    }
+
+    .product_info1 h3 {
+        font-size: 18px;
+        color: #28a745;
+        font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .product_img img {
+            max-width: 100%;
+        }
+    }
+</style>
 {% endblock %}
+
 {% block content %}
-    <div class="container">
-        <div class="product_img">
-            <img src="{{ product.image.url}}" alt="{{ product.name }}">
-        </div>
-        <div class="product_info">
-            <div class="product_title product_info_style">{{ product.name }}</div>
-            <div class="product_description product_info_style" style="font-size: 12px;">{{ product.description }}</div>
-            <div class="product_price product_info_style">&#8377;{{ product.price }}</div>
-            <div class="product_color product_info_style">{{ product.color }}</div>
-            <div class="product_stock product_info_style">
-                {% if product.is_in_stock %}
-                    <form method="post" action="{% url 'checkout_page' product.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="product_button">Buy Now</button>
-                    </form>
-                {% else %}
-                    <p style="color: red;">Out of stock</p>
-                {% endif %}
-            </div>
+<div class="container">
+    <div class="product_img">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>
+    <div class="product_info">
+        <div class="product_title">{{ product.name }}</div>
+        <div class="product_description">{{ product.description }}</div>
+        <div class="product_price">&#8377;{{ product.price }}</div>
+        <div class="product_color"><strong>Color:</strong> {{ product.color }}</div>
+        <div class="product_stock">
+            {% if product.is_in_stock %}
+                <form method="post" action="{% url 'checkout_page' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="product_button">🛒 Buy Now</button>
+                </form>
+            {% else %}
+                <p style="color: red; font-weight: bold;">Out of Stock</p>
+            {% endif %}
         </div>
     </div>
-    <div class="main_container1">
-        {% for productss in productss %}
-        <div class="product1" onclick="gotoproductdetail({{ productss.id }})">
-            <div class="product_img1">
+</div>
+
+<h2 style="text-align:center; margin-top: 30px;">You May Also Like</h2>
+<div class="main_container1">
+    {% for productss in productss %}
+    <div class="product1" onclick="gotoproductdetail({{ productss.id }})">
+        <div class="product_img1">
             <img src="{{ productss.image.url }}" alt="{{ productss.name }}">
-            </div>
-            <div class="product_info1">
-                <p>{{ productss.name }}</p>
-                <h3>&#8377;{{ productss.price }}</h3>
-            </div>
         </div>
-        {% endfor %}
-    <div>
+        <div class="product_info1">
+            <p>{{ productss.name }}</p>
+            <h3>&#8377;{{ productss.price }}</h3>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
+
 {% block extra_js %}
 <script src="{% static 'myapp/js/scripts.js' %}"></script>
 {% endblock %}

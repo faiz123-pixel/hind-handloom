@@ -5,7 +5,7 @@ from .models import products, Image
 class ProductForm(forms.ModelForm):
     class Meta:
         model = products
-        fields = ['name', 'price','description','color', 'stock', 'image']
+        fields = ['name', 'price','description','color', 'stock', 'category', 'image']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control'}),
@@ -13,6 +13,7 @@ class ProductForm(forms.ModelForm):
             'color': forms.TextInput(attrs={'class': 'form-control'}),
             'stock': forms.NumberInput(attrs={'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'category': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 class ImageForm(forms.ModelForm):

@@ -1,32 +1,93 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block extra_css %}
 <style>
-    *{
+    body {
+        background: #f8f9fa;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .delete-container {
+        max-width: 500px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         text-align: center;
     }
-    .content > h2{
+
+    .delete-container h2 {
+        margin-bottom: 20px;
+        color: #d9534f;
+    }
+
+    .delete-container p {
+        font-size: 16px;
+        color: #333;
+        margin: 8px 0;
+    }
+
+    .delete-container form {
         margin-top: 20px;
     }
-    button{
+
+    .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 6px;
+        text-decoration: none;
         margin: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .btn-danger {
+        background: #d9534f;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background: #c9302c;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+
+    @media (max-width: 600px) {
+        .delete-container {
+            width: 90%;
+            padding: 20px;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<h2>Are you sure you want to delete Order #{{ order.id }}?</h2>
+<div class="delete-container">
+    <h2>Are you sure you want to delete Order #{{ order.id }}?</h2>
     
-<p>Product: {{ order.product.name }}</p>
-<p>Customer: {{ order.name }}</p>
-<p>Status: {{ order.status }}</p>
+    <p><strong>Product:</strong> {{ order.product.name }}</p>
+    <p><strong>Customer:</strong> {{ order.name }}</p>
+    <p><strong>Status:</strong> {{ order.status }}</p>
 
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, delete this order</button>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete this order</button>
+    </form>
 
-<a href="{% url 'hidden_page' %}">Cancel</a>
+    <a href="{% url 'hidden_page' %}" class="btn btn-secondary">Cancel</a>
+</div>
 {% endblock %}

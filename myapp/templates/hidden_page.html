@@ -1,199 +1,316 @@
-{% extends 'base.html' %} {% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'myapp/css/hidden_page.css' %}" />
-{% endblock %} {% block content %}
-{% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li style="color: green; text-align:center" id="message">{{ message }}</li>
-            {% endfor %}
-        </ul>
-{% endif %}
-<h2>Admin Panel</h2>
+<link rel="stylesheet" href="{% static 'myapp/css/hidden_page.css' %}">
+<style>
+    body {
+        background: #f8f9fa;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+    }
 
-<!-- Tab Buttons for Orders, Products, Images -->
+    /* Top Navigation Bar */
+    .navbar {
+        background: #3498db;
+        color: #fff;
+        padding: 15px 20px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Success/Error Message */
+    #message {
+        text-align: center;
+        margin: 10px;
+        font-size: 16px;
+        color: green;
+        font-weight: bold;
+    }
+
+    /* Tab Buttons */
+    .tab-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .tab-btn {
+        background: #ddd;
+        border: none;
+        padding: 12px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 6px;
+        transition: 0.3s;
+    }
+
+    .tab-btn.active {
+        background: #3498db;
+        color: #fff;
+    }
+
+    .tab-btn:hover {
+        background: #bbb;
+    }
+
+    /* Section */
+    .content-section {
+        display: none;
+        padding: 20px;
+        background: #fff;
+        margin: 20px auto;
+        border-radius: 10px;
+        max-width: 98%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section.active {
+        display: block;
+    }
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+    /* Tables */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        min-width:800px;
+    }
+
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .table th {
+        background: #f1f1f1;
+    }
+
+    .table img {
+        max-width: 80px;
+        border-radius: 5px;
+    }
+
+    /* Form */
+    .form_class {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 400px;
+        margin: 0 auto 20px;
+        width: 100%;
+    }
+
+    .form_class input, .form_class select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .button {
+        background: #3498db;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .button:hover {
+        background: #2980b9;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .table th, .table td {
+            font-size: 14px;
+            padding: 8px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+
+        .tab-btn {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="navbar">Admin Dashboard</div>
+
+{% if messages %}
+    <p id="message">{{ messages.0 }}</p>
+{% endif %}
+
+<!-- Tabs -->
 <div class="tab-container">
-  <button class="tab-btn active" data-target="orders-section">Orders</button>
-  <button class="tab-btn" data-target="products-section">Products</button>
-  <button class="tab-btn" data-target="images-section">Images</button>
+    <button class="tab-btn active" data-target="orders-section">Orders</button>
+    <button class="tab-btn" data-target="products-section">Products</button>
+    <button class="tab-btn" data-target="images-section">Images</button>
 </div>
 
 <!-- Orders Section -->
 <div id="orders-section" class="content-section active">
-  <h2>Orders</h2>
-  <table border="1" class="table">
-    <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Product Image</th>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Customer Name</th>
-        <th>Mobile</th>
-        <th>Email</th>
-        <th>Address</th>
-        <th>Pincode</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for order in orders %}
-      <tr>
-        <td>{{ order.id }}</td>
-        <td>
-          {% if order.product.image %}
-          <img
-            src="{{ order.product.image.url }}"
-            alt="{{ order.product.name }}"
-            width="100"
-          />
-          {% else %}
-          <span>No Image</span>
-          {% endif %}
-        </td>
-        <td>{{ order.product.name }}</td>
-        <td>&#8377;{{ order.product.price }}</td>
-        <td>{{ order.name }}</td>
-        <td>{{ order.mobile_number }}</td>
-        <td>{{ order.email }}</td>
-        <td>{{ order.address }}</td>
-        <td>{{ order.pincode }}</td>
-        <td>{{ order.status }}</td>
-        <td>
-          <a href="{% url 'update_order' order.id %}">Update</a> |
-          <a href="{% url 'delete_order' order.id %}">Delete</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <h2>Orders</h2>
+    <div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Customer Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Pincode</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{% if order.product.image %}<img src="{{ order.product.image.url }}" alt="{{ order.product.name }}">{% else %}No Image{% endif %}</td>
+                <td>{{ order.product.name }}</td>
+                <td>&#8377;{{ order.product.price }}</td>
+                <td>{{ order.name }}</td>
+                <td>{{ order.mobile_number }}</td>
+                <td>{{ order.email }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.pincode }}</td>
+                <td>{{ order.status }}</td>
+                <td>
+                    <a href="{% url 'update_order' order.id %}">Update</a> |
+                    <a href="{% url 'delete_order' order.id %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="11">No Orders Found</td></tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
 </div>
 
 <!-- Products Section -->
 <div id="products-section" class="content-section">
-  <h2>Add New Product</h2>
-  <!-- Product Form -->
-  <div class="add-product">
+    <h2>Add New Product</h2>
     <form method="POST" enctype="multipart/form-data" class="form_class">
-      {% csrf_token %} {{ product_form.as_p }}
-      <button type="submit" class="button">Add Product</button>
+        {% csrf_token %}
+        {{ product_form.as_p }}
+        <button type="submit" class="button">Add Product</button>
     </form>
-  </div>
-  <!-- Product List -->
-  <h3 style="text-align: center;
-    margin: 10px;">Manage Products</h3>
-  <table border="1" class="table">
-    <thead>
-      <tr>
-        <th>Product ID</th>
-        <th>Product Image</th>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Color</th>
-        <th>Stock</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-      <tr>
-        <td>{{ product.id }}</td>
-        <td>
-          {% if product.image %}
-          <img
-            src="{{ product.image.url }}"
-            alt="{{ product.name }}"
-            width="100"
-          />
-          {% else %}
-          <span>No Image</span>
-          {% endif %}
-        </td>
-        <td>{{ product.name }}</td>
-        <td>&#8377;{{ product.price }}</td>
-        <td>{{ product.color }}</td>
-        <td>{{ product.stock }}</td>
-        <td>
-          <a href="{% url 'update_product' product.id %}">Update</a> |
-          <a href="{% url 'delete_product' product.id %}">Delete</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+
+    <h3 style="text-align:center;">Manage Products</h3>
+    <div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Color</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">{% else %}No Image{% endif %}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>&#8377;{{ product.price }}</td>
+                <td>{{ product.color }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    <a href="{% url 'update_product' product.id %}">Update</a> |
+                    <a href="{% url 'delete_product' product.id %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">No Products Found</td></tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
 </div>
 
 <!-- Images Section -->
 <div id="images-section" class="content-section">
-  <h2>Add New Image</h2>
-  <div class="add-img">
+    <h2>Add New Image</h2>
+    <form method="POST" enctype="multipart/form-data" class="form_class">
+        {% csrf_token %}
+        {{ image_form.as_p }}
+        <button type="submit" class="button">Upload Image</button>
+    </form>
 
-  <form method="POST" enctype="multipart/form-data" class="form_class">
-    {% csrf_token %} {{ image_form.as_p }}
-    <button type="submit" class="button">Upload Image</button>
-  </form>
-  </div>
-  <h3 style="text-align: center;
-    margin: 10px;">Manage Images</h3>
-  <table border="1" class="table">
-    <thead>
-      <tr>
-        <th>Image ID</th>
-        <th>Image Title</th>
-        <th>Image</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for image in images %}
-      <tr>
-        <td>{{ image.id }}</td>
-        <td>{{ image.title }}</td>
-        <td>
-          {% if image.image %}
-          <img
-            src="{{ image.image.url }}"
-            alt="{{ image.title }}"
-            width="100"
-          />
-          {% else %}
-          <span>No Image</span>
-          {% endif %}
-        </td>
-        <td>
-          <a href="{% url 'delete_image' image.id %}">Delete</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <h3 style="text-align:center;">Manage Images</h3>
+    <div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image in images %}
+            <tr>
+                <td>{{ image.id }}</td>
+                <td>{{ image.title }}</td>
+                <td>{% if image.image %}<img src="{{ image.image.url }}" alt="{{ image.title }}">{% else %}No Image{% endif %}</td>
+                <td><a href="{% url 'delete_image' image.id %}">Delete</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No Images Found</td></tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
 </div>
 
 <script>
-  setTimeout(function() {
-    document.getElementById("message").style.display = "none";
-  }, 3000);
-  // JavaScript for tab switching
-  const tabs = document.querySelectorAll(".tab-btn");
-  const sections = document.querySelectorAll(".content-section");
+    // Hide message after 3 seconds
+    setTimeout(() => {
+        const msg = document.getElementById("message");
+        if (msg) msg.style.display = "none";
+    }, 3000);
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", function () {
-      // Remove active class from all buttons
-      tabs.forEach((btn) => btn.classList.remove("active"));
+    // Tab switching
+    const tabs = document.querySelectorAll(".tab-btn");
+    const sections = document.querySelectorAll(".content-section");
 
-      // Hide all sections
-      sections.forEach((section) => section.classList.remove("active"));
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            tabs.forEach(btn => btn.classList.remove("active"));
+            sections.forEach(sec => sec.classList.remove("active"));
 
-      // Add active class to the clicked button
-      this.classList.add("active");
-
-      // Show the corresponding section
-      const target = document.getElementById(this.getAttribute("data-target"));
-      target.classList.add("active");
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.target).classList.add("active");
+        });
     });
-  });
 </script>
 {% endblock %}

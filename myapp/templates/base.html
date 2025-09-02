@@ -237,9 +237,7 @@
     
         <!-- Center Logo -->
         <div class="header-center">
-            <a href="{% url 'home' %}" class="logo-link">
-                <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="logo">
-            </a>
+            <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="logo">
         </div>
     
         <!-- Right Section (Search Bar) -->
@@ -271,7 +269,7 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-left">
-                <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="footer-logo">
+                <img src="{% static 'myapp/images/logo.png' %}" alt="Hind Handloom Logo" class="footer-logo" id="footer-logo">
                 <p>&copy; {{ current_year|default:"2025" }} Hind Handloom. All rights reserved.</p>
             </div>
         </div>
@@ -302,6 +300,26 @@
                 }
             });
         }
+        let clickCount = 0;
+        let clickTimer;
+            
+        document.getElementById('footer-logo').addEventListener('click', function () {
+            clickCount++;
+        
+            if (clickCount === 1) {
+                // Start timer on first click
+                clickTimer = setTimeout(() => {
+                    clickCount = 0; // Reset after 3 seconds
+                }, 3000);
+            }
+        
+            if (clickCount === 5) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                window.location.href = "{% url 'password_prompt' %}";
+            }
+        });
+        
     </script>
     {% block extra_js %}{% endblock %}
 </body>

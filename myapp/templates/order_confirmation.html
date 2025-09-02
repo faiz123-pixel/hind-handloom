@@ -1,44 +1,107 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block extra_css %}
 <style>
-    .main{
-        display: grid;
-        justify-content: center;
-        gap: 10px;
+    .main {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         text-align: center;
+    }
+
+    h2 {
+        font-size: 32px;
+        color: #28a745;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 18px;
+        margin: 8px 0;
+        color: #444;
+    }
+
+    h3 {
+        font-size: 22px;
         margin-top: 20px;
+        color: #333;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 8px;
     }
-    .main li{
-        font-size: 25px;
-        margin: 30px;
-        list-style-type: none;
+
+    .order-details,
+    .shipping-details {
+        text-align: left;
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
     }
-    .main li a{
+
+    .order-details p,
+    .shipping-details p {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    .home-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 8px;
         text-decoration: none;
+        transition: background 0.3s ease;
+    }
+
+    .home-link:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .main {
+            margin: 20px;
+            padding: 20px;
+        }
+        h2 {
+            font-size: 26px;
+        }
+        p {
+            font-size: 16px;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
- <div class="main">
-<h2>Order Confirmation</h2>
+<div class="main">
+    <h2>Order Confirmed ✅</h2>
+    <p>Thank you for your order! We’re processing it now.</p>
 
-<p>Thank you for your order!</p>
-<p>Order ID: {{ order.id }}</p>
-<p>Product: {{ order.product.name }}</p>
-<p>Price: ${{ order.product.price }}</p>
+    <div class="order-details">
+        <h3>Order Details</h3>
+        <p><strong>Order ID:</strong> {{ order.id }}</p>
+        <p><strong>Product:</strong> {{ order.product.name }}</p>
+        <p><strong>Price:</strong> &#8377;{{ order.product.price }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+    </div>
 
-<h3>Shipping Details:</h3>
-<p>Name: {{ order.name }}</p>
-<p>Mobile: {{ order.mobile_number }}</p>
-<p>Mobile: {{ order.email }}</p>
-<p>Pincode: {{ order.pincode }}</p>
-<p>Home District: {{ order.home_district }}</p>
-<p>Address: {{ order.address }}</p>
-<p>Status: {{ order.status }}</p>
-<li><a href="{% url 'home' %}">🏠 Home</a></li>
+    <div class="shipping-details">
+        <h3>Shipping Details</h3>
+        <p><strong>Name:</strong> {{ order.name }}</p>
+        <p><strong>Mobile:</strong> {{ order.mobile_number }}</p>
+        <p><strong>Email:</strong> {{ order.email }}</p>
+        <p><strong>Pincode:</strong> {{ order.pincode }}</p>
+        <p><strong>Home District:</strong> {{ order.home_district }}</p>
+        <p><strong>Address:</strong> {{ order.address }}</p>
+    </div>
+
+    <a href="{% url 'home' %}" class="home-link">🏠 Go to Home</a>
 </div>
 {% endblock %}

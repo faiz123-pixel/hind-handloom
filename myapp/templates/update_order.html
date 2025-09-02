@@ -1,29 +1,98 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'myapp/css/cart.css' %}">
 <style>
-    *{
+    body {
+        background: #f8f9fa;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .update-container {
+        max-width: 500px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         text-align: center;
     }
-    .content > h2{
-        margin: 20px;
+
+    .update-container h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    label {
+        font-size: 16px;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        width: 100%;
+        background: #3498db;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    button:hover {
+        background: #2980b9;
+    }
+
+    /* Success/Error message styling */
+    .message {
+        margin-top: 15px;
+        font-size: 14px;
+        color: green;
+        font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .update-container {
+            width: 90%;
+            padding: 20px;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<h2>Update Order</h2>
-<form method="POST">
-    {% csrf_token %}
-    <label>Status:</label>
-    <select name="status">
-        <option value="Pending" {% if order.status == "Pending" %}selected{% endif %}>Pending</option>
-        <option value="Shipped" {% if order.status == "Shipped" %}selected{% endif %}>Shipped</option>
-        <option value="Delivered" {% if order.status == "Delivered" %}selected{% endif %}>Delivered</option>
-    </select>
-    <button type="submit">Update Order</button>
-</form>
+<div class="update-container">
+    <h2>Update Order</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <label for="status">Select Status:</label>
+        <select name="status" id="status">
+            <option value="Pending" {% if order.status == "Pending" %}selected{% endif %}>Pending</option>
+            <option value="Shipped" {% if order.status == "Shipped" %}selected{% endif %}>Shipped</option>
+            <option value="Delivered" {% if order.status == "Delivered" %}selected{% endif %}>Delivered</option>
+        </select>
+        <button type="submit">Update Order</button>
+    </form>
+
+    {% if messages %}
+        <div class="message">{{ messages.0 }}</div>
+    {% endif %}
+</div>
 {% endblock %}
