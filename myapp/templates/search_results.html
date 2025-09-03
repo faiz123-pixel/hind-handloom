@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Search Results for "{{ query }}"{% endblock %}
+
 {% block extra_css %}
 <style>
     body {
-        background: #f9f9f9;
+        background: #f8f9fa;
+        font-family: Arial, sans-serif;
     }
 
     h1 {
@@ -14,8 +17,15 @@
         color: #333;
     }
 
+    .results-count {
+        text-align: center;
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
     .main_container1 {
-        margin-top: 30px;
+        margin-top: 20px;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
         gap: 20px;
@@ -29,17 +39,18 @@
         background-color: #fff;
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        height: 320px;
+        height: 340px;
+        text-decoration: none;
     }
 
     .product1:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+        transform: scale(1.03);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
 
     .product_img1 {
@@ -47,7 +58,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #f1f1f1;
+        background: #f8f8f8;
     }
 
     .product_img1 img {
@@ -57,7 +68,7 @@
     }
 
     .product_info1 {
-        padding: 10px;
+        padding: 12px;
         text-align: center;
     }
 
@@ -66,6 +77,9 @@
         color: #333;
         margin-bottom: 5px;
         font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .product_info1 h3 {
@@ -75,10 +89,26 @@
         margin: 0;
     }
 
-    /* ✅ Fixed Media Query */
+    .view-details {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 12px;
+        background: #007bff;
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background 0.3s ease;
+    }
+
+    .view-details:hover {
+        background: #0056b3;
+    }
+
+    /* ✅ Mobile Responsive */
     @media (max-width: 768px) {
         .main_container1 {
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             padding: 10px;
         }
 
@@ -87,12 +117,17 @@
         }
 
         .product_img1 img {
-            height: 150px;
+            height: 140px;
         }
 
         .product_info1 p,
         .product_info1 h3 {
             font-size: 14px;
+        }
+
+        .view-details {
+            font-size: 12px;
+            padding: 6px 10px;
         }
     }
 </style>
@@ -100,30 +135,30 @@
 
 {% block content %}
 <h1>Search Results for "{{ query }}"</h1>
+<p class="results-count">
+    {% if product %}
+        {{ product|length }} result{% if product|length > 1 %}s{% endif %} found
+    {% else %}
+        No products found
+    {% endif %}
+</p>
 
 {% if product %}
 <div class="main_container1">
     {% for products in product %}
-    <div class="product1" onclick="gotoproductdetail({{ products.id }})">
+    <div class="product1">
         <div class="product_img1">
             <img src="{{ products.image.url }}" alt="{{ products.name }}">
         </div>
         <div class="product_info1">
-            <p>{{ products.name }}</p>
+            <p title="{{ products.name }}">{{ products.name }}</p>
             <h3>&#8377;{{ products.price }}</h3>
+            <a class="view-details" href="/product/{{ products.id }}/">View Details</a>
         </div>
     </div>
     {% endfor %}
 </div>
 {% else %}
-    <p style="text-align:center; font-size:18px; margin-top:30px; color:#666;">No products found for your search.</p>
+    <p style="text-align:center; font-size:18px; margin-top:30px; color:#666;">No products found for "{{ query }}".</p>
 {% endif %}
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    function gotoproductdetail(productid) {
-        window.location.href = `/product/${productid}/`;
-    }
-</script>
 {% endblock %}

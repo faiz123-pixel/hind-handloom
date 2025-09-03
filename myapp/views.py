@@ -34,7 +34,7 @@ def home(request):
     return render(request, 'home.html', {'images': images,'product':product })
 def product_details(request,id):
     product = get_object_or_404(products,id=id)
-    productss =products.objects.all()
+    productss =products.objects.filter(category=product.category).exclude(id=product.id)[:8]
     return render(request, 'product_details.html',{'product':product,'productss':productss})
 def cart(request):
     return render(request, 'cart.html')
@@ -42,7 +42,8 @@ def about(request):
     contacts= Contact.objects.all()
     return render(request, 'about.html',{'contact':contacts})
 def contact(request):
-    return render(request, 'contact.html')
+    contacts = Contact.objects.all()
+    return render(request, 'contact.html', {'contacts': contacts})
 def shop(request):
     category_filter = request.GET.get('category')
     
@@ -68,16 +69,15 @@ def shop(request):
         })
 
 def search(request):
-    query = request.GET.get('search-item')  # Get the search query from the request
+    query = request.GET.get('search-item', '')  # Get the search query from the request
+    results = []
     if query:
-        product = products.objects.filter(
-            Q(name__icontains=query) | Q(description__icontains=query)
+        results = products.objects.filter(
+            Q(name__icontains=query) | Q(description__icontains=query) | Q(color__icontains=query)
         )
-    else:
-        product = products.objects.all()  # Show all products if no search query
 
     return render(request, 'search_results.html', {
-        'product': product,
+        'product': results,
         'query': query,
     })
 

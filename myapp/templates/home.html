@@ -137,6 +137,12 @@ body{
 .view-all:hover {
     color: #d65b50;
 }
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
 
 /* Horizontal Scroll Row */
 .product-row-scroll {
@@ -241,6 +247,7 @@ body{
     </div>
     <div class="product-row-scroll">
         {% for product in products %}
+        <a href="{% url 'product_details' product.id %}" class="product-card-link">
         <div class="product-card" onclick="gotoproductdetail({{ product.id }})">
             <div class="product-img">
                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
@@ -250,6 +257,7 @@ body{
                 <h3 class="product-price">&#8377;{{ product.price }}</h3>
             </div>
         </div>
+    </a>
         {% endfor %}
     </div>
 </section>

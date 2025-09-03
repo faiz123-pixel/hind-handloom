@@ -1,63 +1,95 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'myapp/css/about.css' %}">
 <style>
-    .contact-container {
-        max-width: 900px;
+    .about-container {
+        max-width: 1100px;
         margin: 40px auto;
         padding: 30px;
-        background: #ffffff;
+        background: #fff;
         border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         text-align: center;
     }
 
-    .contact-container h2 {
-        font-size: 28px;
-        margin-bottom: 20px;
+    .about-container h1 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 15px;
         color: #333;
     }
 
-    .contact-details {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 15px;
-        margin-top: 20px;
+    .about-container p {
+        font-size: 18px;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 20px;
     }
 
-    .contact-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
+    .about-section {
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .about-section h2 {
+        font-size: 24px;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .about-section ul {
+        padding-left: 20px;
+        margin-top: 10px;
+    }
+
+    .about-section ul li {
         font-size: 18px;
+        margin-bottom: 8px;
         color: #444;
     }
 
-    .contact-item i {
-        color: #007bff;
-        font-size: 22px;
+    .highlight {
+        color: #ff6f61;
+        font-weight: bold;
     }
 
-    footer {
-        text-align: center;
-        margin-top: 30px;
-        padding: 10px;
+    /* Contact Info */
+    .contact-details {
+        margin-top: 40px;
+        padding: 20px;
         background: #f8f9fa;
-        border-top: 1px solid #ddd;
-        font-size: 14px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .contact-details h3 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .contact-item {
+        font-size: 18px;
+        margin-bottom: 8px;
         color: #555;
     }
 
+    .contact-item i {
+        margin-right: 8px;
+        color: #007bff;
+    }
+
     @media (max-width: 768px) {
-        .contact-container {
+        .about-container {
             padding: 20px;
         }
 
-        .contact-item {
+        .about-container h1 {
+            font-size: 26px;
+        }
+
+        .about-container p, .about-section ul li, .contact-item {
             font-size: 16px;
         }
     }
@@ -66,44 +98,37 @@
 
 {% block content %}
 <main>
-    <div class="contact-container">
-        <h2>📞 Contact Us</h2>
-        <p>If you have any questions, feel free to reach out to us:</p>
+    <div class="about-container">
+        <h1>About <span class="highlight">Hind Handloom</span></h1>
+        <p>Welcome to <strong>Hind Handloom</strong>, your one-stop destination for premium handloom products and home décor essentials. We are passionate about blending tradition with modern design to create elegant and comfortable living spaces.</p>
 
-        <div class="contact-details">
-            <div class="contact-item">
-                <i class="fas fa-envelope"></i>
-                <span>
-                    {% for contacts in contact %}
-                        {{ contacts.email }}<br>
-                    {% endfor %}
-                </span>
-            </div>
+        <div class="about-section">
+            <h2>Our Mission</h2>
+            <p>To deliver high-quality handloom products that bring elegance and comfort to every home.</p>
+        </div>
 
-            <div class="contact-item">
-                <i class="fas fa-phone"></i>
-                <span>
-                    {% for contacts in contact %}
-                        {{ contacts.phone_number }}<br>
-                    {% endfor %}
-                </span>
-            </div>
+        <div class="about-section">
+            <h2>Our Vision</h2>
+            <p>To become the most trusted brand for handcrafted home furnishings in India.</p>
+        </div>
 
-            <div class="contact-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>
-                    {% for contacts in contact %}
-                        {{ contacts.address }}<br>
-                    {% endfor %}
-                </span>
-            </div>
+        <div class="about-section">
+            <h2>Why Choose Us?</h2>
+            <ul>
+                <li>✅ 100% authentic handloom products</li>
+                <li>✅ Customization options for your home décor</li>
+                <li>✅ Affordable pricing with premium quality</li>
+                <li>✅ Eco-friendly and sustainable materials</li>
+                <li>✅ Secure payments and fast delivery</li>
+            </ul>
+        </div>
+
+        <div class="about-section">
+            <h2>Our Values</h2>
+            <p>We believe in <strong>quality</strong>, <strong>trust</strong>, and <strong>craftsmanship</strong>. Every product we create is a reflection of our dedication to excellence.</p>
         </div>
     </div>
 </main>
-
-<footer>
-    <p>&copy; 2024 Our Company. All rights reserved.</p>
-</footer>
 
 <!-- FontAwesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
