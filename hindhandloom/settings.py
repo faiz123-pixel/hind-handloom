@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -92,10 +93,11 @@ WSGI_APPLICATION = 'hindhandloom.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django',
+        'NAME': 'hindhandloom',
+        'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'your_mongodb_atlas_connection_string',
+            'host': 'mongodb+srv://mo111faiz_db:<mongodb@121>@cluster0.demh4jf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
         }
     }
 }
@@ -145,4 +147,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
