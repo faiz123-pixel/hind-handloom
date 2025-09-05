@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.contact h2{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 3rem;
+}
+.contact p{
+    text-align: center;
+    margin-top: 25px;
+    font-size: 1.5rem;
+}
+footer {
+    background-color: #010151;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 768){
+    .contact p{
+        margin: auto 15px;
+    }
+}
