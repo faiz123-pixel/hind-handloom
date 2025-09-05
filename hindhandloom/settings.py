@@ -34,7 +34,9 @@ SECRET_KEY = 'django-insecure-o=t3k+q*ka@rj(ee5%7smgl_--d-a==xki@(2llt!0wg6#g=m&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =True
 
-ALLOWED_HOSTS = ['https://hind-handloom.onrender.com']
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['hind-handloom.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
