@@ -93,11 +93,10 @@ WSGI_APPLICATION = 'hindhandloom.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django',
-        'NAME': 'hindhandloom',
-        'ENFORCE_SCHEMA': False,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
         'CLIENT': {
-            'host': 'mongodb+srv://mo111faiz_db:<mongodb@121>@cluster0.demh4jf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+            'host': 'your_mongodb_atlas_connection_string',
         }
     }
 }
