@@ -17,12 +17,14 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Your development static files
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",  # Your development static files
+# ]
 
 # Add this for collectstatic
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,7 +34,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 SECRET_KEY = 'django-insecure-o=t3k+q*ka@rj(ee5%7smgl_--d-a==xki@(2llt!0wg6#g=m&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =True
+DEBUG =False
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['hind-handloom.onrender.com', 'localhost', '127.0.0.1']
