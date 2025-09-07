@@ -278,6 +278,11 @@ const indicators = document.querySelectorAll('.indicator');
 
 let index = 0;
 
+function gotoproductdetail(productId) {
+    window.location.href = `/product/${productId}/`;
+}
+
+
 function updateSlider() {
     track.style.transform = `translateX(-${index * 100}%)`;
     indicators.forEach((dot, i) => {
