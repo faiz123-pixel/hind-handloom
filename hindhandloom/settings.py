@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'hindhandloom.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django',
+        'NAME': 'hindhandloom',
         'CLIENT': {
-            'host': 'your_mongodb_atlas_connection_string',
+            'host': os.environ.get('mongodb+srv://mo111faiz_db:mo111faiz_db@cluster0.uqigzmy.mongodb.net/hindhandloom?retryWrites=true&w=majority&appName=Cluster0'),
         }
     }
 }
@@ -131,7 +131,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR / 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
