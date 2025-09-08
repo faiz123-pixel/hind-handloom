@@ -92,11 +92,13 @@ WSGI_APPLICATION = 'hindhandloom.wsgi.application'
 #         }
 #     }
 # }
-import dj_database_url
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(default='postgres://user:password@host:port/dbname')
+# }
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://user:password@host:port/dbname')
+    'default': dj_database_url.config(default=os.environ.get('postgres://user:password@host:port/dbname'))
 }
-
 
 
 # Password validation
