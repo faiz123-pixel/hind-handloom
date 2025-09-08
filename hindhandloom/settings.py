@@ -83,22 +83,16 @@ WSGI_APPLICATION = 'hindhandloom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#         'CLIENT': {
-#             'host': 'your_mongodb_atlas_connection_string',
-#         }
-#     }
-# }
-# import dj_database_url
-# DATABASES = {
-#     'default': dj_database_url.config(default='postgres://user:password@host:port/dbname')
-# }
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('postgres://user:password@host:port/dbname'))
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        'CLIENT': {
+            'host': 'your_mongodb_atlas_connection_string',
+        }
+    }
 }
+
 
 
 # Password validation
