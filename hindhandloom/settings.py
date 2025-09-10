@@ -92,11 +92,22 @@ WSGI_APPLICATION = 'hindhandloom.wsgi.application'
 #         }
 #     }
 # }
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv("postgresql://hinddb_user:TB3KQZzHnNARuv2f221k5rxpmobyqdWH@dpg-d2vivqmr433s73c05ug0-a.oregon-postgres.render.com/hinddb")
+#     )
+# }
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("postgresql://hinddb_user:TB3KQZzHnNARuv2f221k5rxpmobyqdWH@dpg-d2vivqmr433s73c05ug0-a.oregon-postgres.render.com/hinddb")
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hinddb',
+        'USER': 'hinddb_user',
+        'PASSWORD': 'TB3KQZzHnNARuv2f221k5rxpmobyqdWH',
+        'HOST': 'dpg-d2vivqmr433s73c05ug0-a.oregon-postgres.render.com',
+        'PORT': '5432',
+    }
 }
+
 
 
 
