@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,14 +83,19 @@ WSGI_APPLICATION = 'hindhandloom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django',
+#         'NAME': 'hindhandloom',
+#         'CLIENT': {
+#             'host': os.environ.get('mongodb+srv://mo111faiz_db:mo111faiz_db@cluster0.uqigzmy.mongodb.net/hindhandloom?retryWrites=true&w=majority&appName=Cluster0'),
+#         }
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django',
-        'NAME': 'hindhandloom',
-        'CLIENT': {
-            'host': os.environ.get('mongodb+srv://mo111faiz_db:mo111faiz_db@cluster0.uqigzmy.mongodb.net/hindhandloom?retryWrites=true&w=majority&appName=Cluster0'),
-        }
-    }
+    'default': dj_database_url.config(
+        default=os.getenv("postgresql://hinddb_user:TB3KQZzHnNARuv2f221k5rxpmobyqdWH@dpg-d2vivqmr433s73c05ug0-a.oregon-postgres.render.com/hinddb")
+    )
 }
 
 
