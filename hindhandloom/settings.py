@@ -28,7 +28,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'c51d650f9e86d8cd94f8690edbe8f95f')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =False
 
-ALLOWED_HOSTS = ['https://hind-handloom.onrender.com']
+ALLOWED_HOSTS = [ "127.0.0.1",
+    "localhost",
+    "hind-handloom.onrender.com",]
 
 
 # Application definition
