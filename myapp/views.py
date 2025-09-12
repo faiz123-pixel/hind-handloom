@@ -221,6 +221,18 @@ def update_product(request, product_id):
     return render(request, 'update_product.html', {'form': form, 'product': product})
 
 @user_passes_test(lambda u: u.is_superuser)
+def add_product(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("hidden_page")
+    else:
+        form = ProductForm()
+    return render(request, "update_product.html", {"form": form})
+
+
+@user_passes_test(lambda u: u.is_superuser)
 def delete_product(request, product_id):
     product = get_object_or_404(products, id=product_id)
 

@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-o=t3k+q*ka@rj(ee5%7smgl_--d-a==xki@(2llt!0wg6#g=m&'
 SECRET_KEY = os.environ.get('SECRET_KEY', 'c51d650f9e86d8cd94f8690edbe8f95f')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =False
+DEBUG =True
 
-ALLOWED_HOSTS = ['hind-handloom.onrender.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -147,7 +147,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR / 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -155,5 +155,5 @@ STATIC_ROOT = os.path.join(BASE_DIR / 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR, 'media'
 
