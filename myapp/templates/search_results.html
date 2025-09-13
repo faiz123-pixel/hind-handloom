@@ -44,7 +44,7 @@
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        height: 340px;
+        height: 300px;
         text-decoration: none;
     }
 
@@ -89,22 +89,6 @@
         margin: 0;
     }
 
-    .view-details {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 8px 12px;
-        background: #007bff;
-        color: #fff;
-        border-radius: 6px;
-        text-decoration: none;
-        font-size: 14px;
-        transition: background 0.3s ease;
-    }
-
-    .view-details:hover {
-        background: #0056b3;
-    }
-
     /* ✅ Mobile Responsive */
     @media (max-width: 768px) {
         .main_container1 {
@@ -113,7 +97,7 @@
         }
 
         .product1 {
-            height: 260px;
+            height: 240px;
         }
 
         .product_img1 img {
@@ -123,11 +107,6 @@
         .product_info1 p,
         .product_info1 h3 {
             font-size: 14px;
-        }
-
-        .view-details {
-            font-size: 12px;
-            padding: 6px 10px;
         }
     }
 </style>
@@ -146,14 +125,13 @@
 {% if product %}
 <div class="main_container1">
     {% for products in product %}
-    <div class="product1">
+    <div class="product1" onclick="gotoproductdetail({{ products.id }})">
         <div class="product_img1">
             <img src="{{ products.image.url }}" alt="{{ products.name }}">
         </div>
         <div class="product_info1">
             <p title="{{ products.name }}">{{ products.name }}</p>
             <h3>&#8377;{{ products.price }}</h3>
-            <a class="view-details" href="/product/{{ products.id }}/">View Details</a>
         </div>
     </div>
     {% endfor %}
@@ -161,4 +139,13 @@
 {% else %}
     <p style="text-align:center; font-size:18px; margin-top:30px; color:#666;">No products found for "{{ query }}".</p>
 {% endif %}
+
+<!-- ✅ JS function -->
+<script>
+function gotoproductdetail(productId) {
+    window.location.href = `/product/${productId}/`;
+    // OR use Django URL reverse if available:
+    // window.location.href = "{% url 'product_detail' 0 %}".replace("0", productId);
+}
+</script>
 {% endblock %}
