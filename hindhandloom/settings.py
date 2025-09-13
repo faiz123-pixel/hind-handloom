@@ -31,6 +31,9 @@ DEBUG =False
 ALLOWED_HOSTS = [ "127.0.0.1",
     "localhost",
     "hind-handloom.onrender.com",]
+# DEBUG =True
+
+# ALLOWED_HOSTS = []
 
 
 # Application definition
