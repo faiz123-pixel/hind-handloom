@@ -198,10 +198,7 @@
 <!-- ✅ Add JS function here -->
 <script>
 function gotoproductdetail(productId) {
-    // Assuming you have a named URL like `product_detail`
     window.location.href = `/product/${productId}/`;
-    // OR if you have Django's reverse URL:
-    // window.location.href = "{% url 'product_detail' 0 %}".replace("0", productId);
 }
 </script>
 {% endblock %}
