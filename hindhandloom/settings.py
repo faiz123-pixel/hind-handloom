@@ -26,14 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-o=t3k+q*ka@rj(ee5%7smgl_--d-a==xki@(2llt!0wg6#g=m&'
 SECRET_KEY = os.environ.get('SECRET_KEY', 'c51d650f9e86d8cd94f8690edbe8f95f')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =False
+# DEBUG =False
 
-ALLOWED_HOSTS = [ "127.0.0.1",
-    "localhost",
-    "hind-handloom.onrender.com",]
-# DEBUG =True
+# ALLOWED_HOSTS = [ "127.0.0.1",
+#     "localhost",
+#     "hind-handloom.onrender.com",]
+DEBUG =True
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'cloudinary',
+    'cloudinary_storage',
+
 ]
 
 
@@ -150,6 +153,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'doxpq1xg9',
+    'API_KEY': '924568615127465',
+    'API_SECRET': 'R1LE2_TaDsn8WM74PP-bRlENTDg'
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
